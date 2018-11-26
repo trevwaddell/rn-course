@@ -10,7 +10,9 @@ class LibraryList extends Component {
       <View>
         <FlatList
           data={this.props.libraries}
-          renderItem={library => <ListItem {...library} />}
+          renderItem={({ item }) => {
+            return <ListItem {...item} />;
+          }}
           keyExtractor={library => `${library.id}`}
         />
       </View>

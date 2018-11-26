@@ -10,21 +10,17 @@ class ListItem extends Component {
     this.props.selectLibrary(id);
   };
 
-  renderDescription = (id, description) => {
-    const { selectedLibraryId } = this.props;
-    if (selectedLibraryId === id)
+  renderDescription = () => {
+    if (this.props.expanded)
       return (
         <Card.Item>
-          <Text>{description}</Text>
+          <Text>{this.props.description}</Text>
         </Card.Item>
       );
   };
 
   render() {
-    const {
-      item: { id, description, title },
-      selectedLibraryId
-    } = this.props;
+    const { id, description, title, selectedLibraryId } = this.props;
     const { titleStyles } = styles;
     return (
       <Fragment>
@@ -33,7 +29,7 @@ class ListItem extends Component {
             <Text style={titleStyles}> {title} </Text>
           </Card.Item>
         </TouchableOpacity>
-        {this.renderDescription(id, description)}
+        {this.renderDescription()}
       </Fragment>
     );
   }
@@ -43,9 +39,9 @@ const styles = StyleSheet.create({
   titleStyles: { fontWeight: "600", padding: 5 }
 });
 
-const mapStateToProps = ({ selectedLibraryId }) => ({
-  selectedLibraryId
-});
+const mapStateToProps = ({ selectedLibraryId }, { id }) => {
+  return { expanded: selectedLibraryId === id };
+};
 
 export default connect(
   mapStateToProps,
